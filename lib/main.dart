@@ -27,7 +27,6 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
-  int qn = 0;
   List<Icon> storeKeper = [];
   QuestionBrain qb= QuestionBrain();
   @override
@@ -42,7 +41,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                qb.questionBank[qn].questionText,
+                qb.getquestionText(),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
@@ -67,12 +66,9 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                // print(qn);
-                // print(isanswer[qn]);
-                print(qb.questionBank[qn].questionAnswer);
 
                 setState(() {
-                  if (qb.questionBank[qn].questionAnswer == true) {
+                  if (qb.getAnswer() == true) {
                     storeKeper.add(
                       Icon(
                         Icons.check,
@@ -87,11 +83,7 @@ class _QuizPageState extends State<QuizPage> {
                       ),
                     );
                   }
-                  if (qn < 2) {
-                    qn++;
-                  } else {
-                    qn = 0;
-                  }
+                  qb.nextQuestion();
                 });
                 //The user picked true.
               },
