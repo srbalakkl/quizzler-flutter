@@ -1,12 +1,16 @@
 import 'dart:core';
-import 'questionBrain.dart';
+
 import 'package:flutter/material.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+
+import 'questionBrain.dart';
 
 void main() => runApp(Quizzler());
 
 class Quizzler extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       home: Scaffold(
         backgroundColor: Colors.grey.shade900,
@@ -28,9 +32,11 @@ class QuizPage extends StatefulWidget {
 
 class _QuizPageState extends State<QuizPage> {
   List<Icon> storeKeper = [];
-  void checkAnswer(bool pickedAnswer){
+  QuestionBrain qb = QuestionBrain();
+
+  void checkAnswer(bool pickedAnswer) {
     setState(() {
-      if (qb.getAnswer() == true) {
+      if (qb.getAnswer() == pickedAnswer) {
         storeKeper.add(
           Icon(
             Icons.check,
@@ -45,13 +51,22 @@ class _QuizPageState extends State<QuizPage> {
           ),
         );
       }
+
     });
     qb.nextQuestion();
   }
 
-  QuestionBrain qb= QuestionBrain();
   @override
   Widget build(BuildContext context) {
+
+    simpleAlert(){
+      Alert(
+        context: context,
+        title: 'Finished!',
+        desc: 'You\'ve reached the end of the quiz.',
+      ).show();
+    }
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -87,7 +102,12 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                checkAnswer(true);
+                if(qb.isFinished == true){
+                  print('inside ');
+                  simpleAlert();
+                }else{
+                  checkAnswer(true);
+                }
               },
             ),
           ),
@@ -107,8 +127,12 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                checkAnswer(false);
-                //The user picked false.
+                if(qb.isFinished == true){
+                  print('inside ');
+                  simpleAlert();
+                }else{
+                  checkAnswer(false);
+                }
               },
             ),
           ),
@@ -120,9 +144,12 @@ class _QuizPageState extends State<QuizPage> {
 
         //TODO: Add a Row here as your score keeper
       ],
+
     );
+
   }
 }
+
 
 /*
 question1: 'You can lead a cow down stairs but not up stairs.', false,

@@ -2,10 +2,8 @@ import 'question.dart';
 
 class QuestionBrain {
   int _questionNumber = 0;
+  bool isFinished = false;
   List<Question> _questionBank = [
-    Question('You can lead a cow down stairs but not up stairs.', false),
-    Question('Approximately one quarter of human bones are in the feet.', true),
-    Question('A slug\'s blood is green.', true),
     Question('Some cats are actually allergic to humans', true),
     Question('You can lead a cow down stairs but not up stairs.', false),
     Question('Approximately one quarter of human bones are in the feet.', true),
@@ -38,6 +36,8 @@ class QuestionBrain {
       print('the q no is $_questionNumber');
       print(_questionBank.length);
       _questionNumber += 1;
+    }else{
+      isFinished=true;
     }
   }
 
@@ -48,5 +48,17 @@ class QuestionBrain {
   bool getAnswer() {
     return _questionBank[_questionNumber].questionAnswer;
   } // List<Question> get questionBank => _questionBank;
+
+  // bool isFinished() {
+  //   if (_questionNumber < _questionBank.length - 1) {
+  //     //TODO: Step 3 Part B - Use a print statement to check that isFinished is returning true when you are indeed at the end of the quiz and when a restart should happen.
+  //
+  //     print('Now returning true');
+  //     return true;
+  //
+  //   } else {
+  //     return false;
+  //   }
+  // }
 
 }
